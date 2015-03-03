@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 27, 2015 at 06:01 PM
+-- Generation Time: Mar 02, 2015 at 02:01 PM
 -- Server version: 5.0.27-community-nt
 -- PHP Version: 5.4.12
 
@@ -29,18 +29,42 @@ USE `social`;
 --
 
 CREATE TABLE IF NOT EXISTS `evets` (
-  `EName` varchar(100) NOT NULL default '',
-  `Etype` int(11) default NULL,
+  `EName` varchar(100) NOT NULL,
+  `EType` int(11) NOT NULL,
+  `EValue` int(11) NOT NULL,
   PRIMARY KEY  (`EName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evets`
 --
-
-INSERT INTO `evets` (`EName`, `Etype`) VALUES
-('testEvent1', 1),
-('testevent2', 0);
+--multiple = 0
+--onetime = 1
+--
+INSERT INTO `evets` (`EName`, `EType`, `EValue`) VALUES
+('Attend Bluegrass Conclave', 1, 100),
+('Attend Lambda Chi Alpha Philanthropy', 1, 100),
+('KD War of theWIngs', 1, 100),
+('Phi Mu Philanthropy', 1, 100),
+('Alpha Gam Philanthropy', 1, 100),
+('Delta Gamma Philanthropy', 1, 100),
+('Alpha Delta Phi Philanthropy', 0, 100),
+('Pi Phi Philanthropy', 1, 100),
+('Attend up til Dawn Finale', 1, 75),
+('Attend Greek Sing', 1, 60),
+('Brotherhood event', 0, 40),
+('Officer position outside of Lambda Chi Alpha', 0, 15),
+('Bring out a recruit', 0, 15),
+('Service outside of Lambda Chi Alpha (per hour)', 0, 10),
+('Attend intramural Game', 0, 10),
+('Participate in an intramural Game', 0, 15),
+('Participate in an RSO outside of Lambda Chi Alpha', 0, 10),
+('Attend U of M athletic event', 0, 10),
+('Brother of the Week', 1, 50),
+('Rock for a Cure', 1, 75),
+('Buying one flower', 1, 10),
+('Buying two flowers', 1, 20),
+('Buying three flowers', 1, 30);
 
 -- --------------------------------------------------------
 
@@ -103,8 +127,8 @@ INSERT INTO `posts` (`email`, `title`, `message`, `category`, `DandT`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `userandevents` (
-  `zeta` int(11) default NULL,
-  `eID` varchar(100) default NULL
+  `zeta` int(11) NOT NULL,
+  `eID` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -113,9 +137,11 @@ CREATE TABLE IF NOT EXISTS `userandevents` (
 
 INSERT INTO `userandevents` (`zeta`, `eID`) VALUES
 (123, 'testEvent1'),
-(123, 'testEvent1'),
-(123, 'testEvent1'),
-(123, 'testevent2');
+(123, 'testEventX'),
+(123, 'testEventX'),
+(123, 'testEventX'),
+(555, 'testEvent1'),
+(555, 'testEventX');
 
 --
 -- Constraints for dumped tables

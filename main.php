@@ -1,10 +1,10 @@
 <?php
 
 if(isset($_SESSION['userNM'])){
-    require ("EstablishAccess.php");
+ 
 }else{
 	 header('Location:sign&log.html') ;
-     require ("EstablishAccess.php");
+     include("EstablishAccess.php");
 }
 
 ?>
@@ -55,19 +55,19 @@ if(isset($_SESSION['userNM'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Add Beta Points</a>
+                <a class="navbar-brand" href="#">Beta Points</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">View Events</a>
+                        <a href="main.php">Add Beta Points</a>
                     </li>
                     <li>
                         <a href="viewBeta.php">View Beta Points</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="logout.php">logout</a>
                     </li>
                 </ul>
             </div>

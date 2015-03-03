@@ -1,12 +1,17 @@
 <?php
-require ("EstablishAccess.php");
+
  
 if (isset($_POST["username"])) {
-	
-	$connctn=mysql_connect($DB_HOST,$DB_USER,$DB_PASSWORD)
-	or die("cannot connect to database");
-	mysql_selectdb('BetaPoints')
-	or die('cannot select database');
+	include("EstablishAccess.php");
+	$connctn = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
+    if (!$connctn) {
+        die('Not connected : ' . mysql_error());
+    }
+    // make foo the current db
+    $db_selected = mysql_select_db('BetaPoints', $connctn);
+    if (!$db_selected) {
+        die ('Can\'t use foo : ' . mysql_error());
+    }
 	
 	$uname=$_POST["username"];
 	$pwrd=$_POST["password"];
@@ -65,11 +70,16 @@ if (isset($_POST["username"])) {
 	//echo "$sgnpwd <br>";
 	//echo "$sgnemail<br>";
 	//echo "$gender <br>";
-	
-	$connctn=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD)
-	or die("cnnot connect to database");
-	mysql_selectdb('social')
-	or die('cannot select database');
+	include("EstablishAccess.php");
+	$connctn = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
+    if (!$connctn) {
+        die('Not connected : ' . mysql_error());
+    }
+    // make foo the current db
+    $db_selected = mysql_select_db('BetaPoints', $connctn);
+    if (!$db_selected) {
+        die ('Can\'t use foo : ' . mysql_error());
+    }
 	
 	//$uname=$_POST["username"];
 	//$pwrd=$_POST["password"];

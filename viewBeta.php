@@ -1,10 +1,10 @@
 <?php
-require ("EstablishAccess.php");
 session_start();
 if(isset($_SESSION['userNM'])){
- 
+    include("EstablishAccess.php");
 }else{
 	 header('Location:sign&log.html') ;
+     include("EstablishAccess.php");
 }
 
 ?>
@@ -55,19 +55,19 @@ if(isset($_SESSION['userNM'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a  class="nav navbar-nav" href="main.php">Add Beta Points</a>
+                <a class="navbar-brand" href="#">Beta Points</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul>
+                <ul class="nav navbar-nav">
                     <li>
-                        <a href="#"  class="nav navbar-nav">View Events</a>
+                        <a href="index.php">Add Beta Points</a>
                     </li>
                     <li>
-                        <a href="viewBeta.php" class="navbar-brand">View Beta Points</a>
+                        <a href="viewBeta.php">View Beta Points</a>
                     </li>
                     <li>
-                        <a href="#"  class="nav navbar-nav" >Contact</a>
+                        <a href="logout.php">logout</a>
                     </li>
                 </ul>
             </div>
@@ -82,22 +82,39 @@ if(isset($_SESSION['userNM'])){
  
       
    <?php
-   $connctn=mysql_connect('localhost','root','root')
-	or die("cnnot connect to database");
-	mysql_selectdb('BetaPoints')
-	or die('cannot select database');
-	
+   include("EstablishAccess.php");
+   $connctn = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
+    if (!$connctn) {
+        die('Not connected : ' . mysql_error());
+    }
+    // make foo the current db
+    $db_selected = mysql_select_db('BetaPoints', $connctn);
+    if (!$db_selected) {
+        die ('Can\'t use foo : ' . mysql_error());
+    }
  
-		$query = "SELECT zeta,eID FROM userandevents";
+ 		$myzeta = $_SESSION["zeta"];
+		echo "</br>";
+		echo "</br>";
+		echo "<b>results for  user zeta : $myzeta </b>";
+		echo "</br>";
+		echo "</br>";
+		//$query = "SELECT eID as EventNames,COUNT(*) as Eventcounts FROM userandevents GROUP BY eID";
+		$query = "SELECT t1.eID as EventNames,t2.EValue as EventValue,COUNT(*) as EventOccurence FROM userandevents t1,evets t2 WHERE t1.eID=t2.EName  AND t1.zeta=". $myzeta . " GROUP BY t1.eID";
 		$result=mysql_query($query)
 	or die("Could not execulte query");
 
  
-     echo "<table><tr><th>zeta &nbsp; &nbsp;  </th><th>Event Name</th></tr>";
+     echo "<table><tr><th>EventNames  &nbsp; &nbsp;  </th><th>   EventValue &nbsp; &nbsp;   </th>   &nbsp; &nbsp;  </th><th>   EventOccurence</th></tr>";
      // output data of each row
+	 $mytCnt=0;
      while($row = mysql_fetch_assoc($result)) {
-         echo "<tr><td>" . $row["zeta"]. "</td><td>" . $row["eID"]. "  </td></tr>";
+        echo "<tr><td>" . $row["EventNames"]. "</td><td>" . $row["EventValue"]."</td><td>" . $row["EventOccurence"]. "  </td></tr>";
+		  $mytCnt+=$row["EventValue"] * $row["EventOccurence"] ;
+		 
      }
+	  echo "<tr><td> <b> Total :  </b> </td><td> <b>" . $mytCnt. " </b> </td></tr>";
+	 
      echo "</table>";
  
 
